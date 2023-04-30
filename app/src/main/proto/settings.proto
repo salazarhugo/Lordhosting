@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option java_package = "com.salazar.lordhosting";
+option java_multiple_files = true;
+
+
+enum Language {
+  ENGLISH = 0;
+  FRENCH = 1;
+}
+
+enum Theme {
+  SYSTEM_DEFAULT = 0;
+  DARK = 1;
+  LIGHT = 2;
+}
+
+message Settings {
+  Theme theme = 1;
+  string pin_code = 2;
+  bool biometric_enabled = 3;
+  bool is_first_run = 4;
+  repeated string cookies = 5;
+  Language language = 6;
+  bool is_logged_in = 7;
+  string xsrf_token = 8;
+  string api_key = 9;
+}
