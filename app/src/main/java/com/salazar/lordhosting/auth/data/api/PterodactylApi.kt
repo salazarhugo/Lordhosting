@@ -5,6 +5,8 @@ import com.salazar.lordhosting.account.data.request.UpdatePasswordRequest
 import com.salazar.lordhosting.account.data.response.AccountDetailsResponse
 import com.salazar.lordhosting.auth.data.request.LoginRequest
 import com.salazar.lordhosting.auth.data.response.LoginResponse
+import com.salazar.lordhosting.server.data.request.SendCommandRequest
+import com.salazar.lordhosting.server.data.response.ConsoleWebSocketResponse
 import com.salazar.lordhosting.server.data.response.ListServersResponse
 import retrofit2.Response
 import retrofit2.http.*
@@ -41,6 +43,18 @@ interface PterodactylApi {
     @PUT("api/client/account/password")
     suspend fun updatePassword(
         @Body request: UpdatePasswordRequest,
+    ): Response<Void>
+
+
+    @GET("api/client/servers/{serverUUID}/websocket")
+    suspend fun getWebSocket(
+        @Path("serverUUID") serverUUID: String,
+    ): ConsoleWebSocketResponse
+
+    @POST("api/client/servers/{serverID}/command")
+    suspend fun sendCommand(
+        @Path("serverID") serverID: String,
+        @Body request: SendCommandRequest,
     ): Response<Void>
 
     companion object {

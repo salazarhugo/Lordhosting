@@ -3,14 +3,14 @@ package com.salazar.lordhosting.server.ui.servers
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.salazar.lordhosting.server.data.repository.ServerRepository
-import com.salazar.lordhosting.server.data.response.Server
+import com.salazar.lordhosting.server.data.response.ServerResponse
+import com.salazar.lordhosting.server.domain.models.Server
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.time.Instant
 import javax.inject.Inject
 
 data class ServersUiState(

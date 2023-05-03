@@ -1,4 +1,4 @@
-package com.salazar.lordhosting.server.ui.servers
+package com.salazar.lordhosting.server.ui.server
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -7,21 +7,24 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.salazar.lordhosting.core.navigation.LordHostingNavigationActions
 
 /**
- * Stateful composable that displays the Navigation route for the Servers screen.
+ * Stateful composable that displays the Navigation route for the Server screen.
  *
  * @param viewModel ViewModel that handles the business logic of this screen
  */
 @Composable
-fun ServersRoute(
-    viewModel: ServersViewModel = hiltViewModel(),
+fun ServerRoute(
+    viewModel: ServerViewModel = hiltViewModel(),
     navActions: LordHostingNavigationActions,
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    ServersScreen(
+    ServerScreen(
         uiState = uiState,
-        onServerClick = {
-            navActions.navigateToServer(it.uuid)
-        }
+        onServerUIAction = { action ->
+            val serverID = uiState.serverID
+            when(action) {
+                ServerUIAction.OnConsoleClick -> navActions.navigateToConsole(serverID)
+            }
+        },
     )
 }

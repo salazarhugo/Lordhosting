@@ -20,5 +20,12 @@ fun ConsoleRoute(
 
     ConsoleScreen(
         uiState = uiState,
+        onConsoleUIAction = { action ->
+            when(action) {
+                ConsoleUIAction.OnBackPressClick -> navActions.navigateBack()
+                is ConsoleUIAction.OnCommandChange -> viewModel.updateCommand(action.command)
+                ConsoleUIAction.OnSendCommandClick -> viewModel.sendCommand()
+            }
+        }
     )
 }

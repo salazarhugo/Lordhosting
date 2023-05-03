@@ -17,6 +17,7 @@ object LordHostingDestinations {
  * Destinations used in the [ServerGraph].
  */
 object ServerDestinations {
+    const val SERVER_ROUTE = "server"
     const val CONSOLE_ROUTE = "console"
     const val FILE_ROUTE = "files"
     const val BACKUPS_ROUTE = "backups"
@@ -59,6 +60,12 @@ class LordHostingNavigationActions(
 ) {
     val navigateBack: () -> Unit = {
         navController.popBackStack()
+    }
+
+    val navigateToServer: (String) -> Unit = { serverId ->
+        navController.navigate("${ServerDestinations.SERVER_ROUTE}/$serverId") {
+            launchSingleTop = true
+        }
     }
 
     val navigateToConsole: (String) -> Unit = { serverId ->

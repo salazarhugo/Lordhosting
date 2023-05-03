@@ -11,6 +11,8 @@ import com.salazar.lordhosting.auth.data.interceptor.SetHeaderInterceptor
 import com.salazar.lordhosting.auth.data.repository.AuthRepository
 import com.salazar.lordhosting.auth.data.repository.AuthRepositoryImpl
 import com.salazar.lordhosting.core.data.datastore.settingsDataStore
+import com.salazar.lordhosting.core.data.db.Database
+import com.salazar.lordhosting.server.data.db.ServerDao
 import com.salazar.lordhosting.server.data.repository.ServerRepository
 import com.salazar.lordhosting.server.data.repository.ServerRepositoryImpl
 import com.squareup.moshi.Moshi
@@ -82,5 +84,23 @@ object AppModule {
     fun provideSettingsDataStore(@ApplicationContext context: Context): DataStore<Settings> {
         return context.settingsDataStore
     }
+
+    @Singleton
+    @Provides
+    fun provideDb(@ApplicationContext context: Context): Database {
+        return androidx.room.Room
+            .databaseBuilder(context.applicationContext, Database::class.java, "lordhosting.db")
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideServerDao(
+        database: Database,
+    ): ServerDao {
+        return database.serverDao()
+    }
+
 
 }

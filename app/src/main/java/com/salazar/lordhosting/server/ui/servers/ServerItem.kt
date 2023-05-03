@@ -19,7 +19,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.salazar.lordhosting.core.ui.components.LordCard
-import com.salazar.lordhosting.server.data.response.Server
+import com.salazar.lordhosting.server.data.response.ServerResponse
+import com.salazar.lordhosting.server.domain.models.Server
 
 @Composable
 fun ServerItem(
@@ -44,13 +45,12 @@ fun ServerItem(
                 }
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
-                    text = server.attributes.name,
+                    text = server.name,
                 )
             }
             Row(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                val sftpDetails = server.attributes.sftp_details
                 Icon(
                     imageVector = Icons.Default.Wifi,
                     contentDescription = null,
@@ -58,7 +58,7 @@ fun ServerItem(
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
-                    text = "${sftpDetails.ip}:${sftpDetails.port}",
+                    text = "${server.ip}:${server.port}",
                     style = MaterialTheme.typography.labelMedium,
                 )
             }

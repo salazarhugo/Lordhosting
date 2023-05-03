@@ -5,17 +5,18 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class ListServersResponse(
-    val data: List<Server>
+    val data: List<ServerResponse>
 )
 
 @JsonClass(generateAdapter = true)
-data class Server(
+data class ServerResponse(
     val attributes: ServerAttributes,
 )
 
 @JsonClass(generateAdapter = true)
 data class ServerAttributes(
     val name: String,
+    val identifier: String,
     val uuid: String,
     val node: String,
     val description: String,
