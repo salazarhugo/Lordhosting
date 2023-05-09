@@ -12,6 +12,8 @@ import com.salazar.lordhosting.auth.data.repository.AuthRepository
 import com.salazar.lordhosting.auth.data.repository.AuthRepositoryImpl
 import com.salazar.lordhosting.core.data.datastore.settingsDataStore
 import com.salazar.lordhosting.core.data.db.Database
+import com.salazar.lordhosting.files.data.repository.FilesRepository
+import com.salazar.lordhosting.files.data.repository.FilesRepositoryImpl
 import com.salazar.lordhosting.server.data.db.ServerDao
 import com.salazar.lordhosting.server.data.repository.ServerRepository
 import com.salazar.lordhosting.server.data.repository.ServerRepositoryImpl
@@ -69,6 +71,13 @@ object AppModule {
     fun provideServerRepository(
         impl: ServerRepositoryImpl,
     ): ServerRepository {
+        return impl
+    }
+
+    @Provides
+    fun provideFilesRepository(
+        impl: FilesRepositoryImpl,
+    ): FilesRepository {
         return impl
     }
 

@@ -102,5 +102,14 @@ class ServerViewModel @Inject constructor(
                 client.newWebSocket(request, webSocketListener)
             }
     }
+
+    fun updatePowerState(signal: String) {
+        viewModelScope.launch {
+            serverRepository.updatePowerState(
+                serverID = serverID,
+                signal = signal,
+            )
+        }
+    }
 }
 

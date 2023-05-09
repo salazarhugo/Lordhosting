@@ -20,4 +20,9 @@ interface ServerRepository {
         serverID: String,
         command: String,
     ): Result<Unit>
+
+    suspend fun updatePowerState(
+        serverID: String,
+        signal: String,
+    ): Result<Unit>
 }

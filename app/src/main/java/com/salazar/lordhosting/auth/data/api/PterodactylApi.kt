@@ -5,7 +5,9 @@ import com.salazar.lordhosting.account.data.request.UpdatePasswordRequest
 import com.salazar.lordhosting.account.data.response.AccountDetailsResponse
 import com.salazar.lordhosting.auth.data.request.LoginRequest
 import com.salazar.lordhosting.auth.data.response.LoginResponse
+import com.salazar.lordhosting.files.data.response.ListFilesResponse
 import com.salazar.lordhosting.server.data.request.SendCommandRequest
+import com.salazar.lordhosting.server.data.request.UpdatePowerStateRequest
 import com.salazar.lordhosting.server.data.response.ConsoleWebSocketResponse
 import com.salazar.lordhosting.server.data.response.ListServersResponse
 import retrofit2.Response
@@ -56,6 +58,19 @@ interface PterodactylApi {
         @Path("serverID") serverID: String,
         @Body request: SendCommandRequest,
     ): Response<Void>
+
+    @POST("api/client/servers/{serverID}/power")
+    suspend fun updatePowerState(
+        @Path("serverID") serverID: String,
+        @Body request: UpdatePowerStateRequest,
+    ): Response<Void>
+
+    @GET("api/client/servers/{serverID}/files/list")
+    suspend fun listFiles(
+        @Path("serverID") serverID: String,
+        // URL encoded path to list files from
+        @Query("directory") directory: String? = null,
+    ): ListFilesResponse
 
     companion object {
 //         const val BASE_URL = "https://game.lordhosting.fr/"

@@ -2,6 +2,7 @@ package com.salazar.lordhosting.core.navigation
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -13,6 +14,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.salazar.lordhosting.core.ui.LordHostingAppState
 import com.salazar.lordhosting.core.ui.LordHostingBottomBar
+import com.salazar.lordhosting.core.ui.LordHostingDrawer
 import com.salazar.lordhosting.core.ui.LordHostingUiState
 
 
@@ -33,6 +35,7 @@ fun LordHostingNavGraph(
                 || navBackStackEntry?.destination?.hierarchy?.any { it.route == LordHostingDestinations.SETTING_ROUTE } == true
                 || navBackStackEntry?.destination?.hierarchy?.any { it.route == LordHostingDestinations.AUTH_ROUTE } == true
 //                || currentRoute.contains(ServerDestinations.SERVER_ROUTE)
+
     ModalBottomSheetLayout(
         bottomSheetNavigator = appState.bottomSheetNavigator,
         sheetShape = MaterialTheme.shapes.extraLarge,
@@ -42,37 +45,49 @@ fun LordHostingNavGraph(
             .fillMaxSize()
             .imePadding()
     ) {
-        Scaffold(
-            snackbarHost = { SnackbarHost(appState.snackBarHostState) },
-            bottomBar = {
-                AnimatedVisibility(
-                    visible = !hide,
+        val state = rememberDrawerState(DrawerValue.Closed)
+        ModalNavigationDrawer(
+            drawerState = state,
+            drawerContent = {
+                LordHostingDrawer(
+                    navBackStackEntry = navBackStackEntry,
+                    navController = appState.navController,
+                    drawerState = state,
+                )
+            },
+        ) {
+            Scaffold(
+                snackbarHost = { SnackbarHost(appState.snackBarHostState) },
+                bottomBar = {
+                    AnimatedVisibility(
+                        visible = !hide,
+                    ) {
+                        LordHostingBottomBar(
+                            picture = "",
+                            currentRoute = currentRoute,
+                            onNavigate = { route ->
+                                appState.navController.navigate(route)
+                            },
+                        )
+                    }
+                },
+            ) { innerPadding ->
+                AnimatedNavHost(
+                    modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),
+                    route = LordHostingDestinations.ROOT_ROUTE,
+                    navController = appState.navController,
+                    startDestination = startDestination,
                 ) {
-                    LordHostingBottomBar(
-                        picture = "",
-                        currentRoute = currentRoute,
-                        onNavigate = { route ->
-                            appState.navController.navigate(route)
-                        },
+                    authNavGraph(
+                        navActions = navActions,
+                    )
+                    serverNavGraph(
+                        navActions = navActions,
+                    )
+                    mainNavGraph(
+                        appState = appState,
                     )
                 }
-            },
-        ) { innerPadding ->
-            AnimatedNavHost(
-                modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),
-                route = LordHostingDestinations.ROOT_ROUTE,
-                navController = appState.navController,
-                startDestination = startDestination,
-            ) {
-                authNavGraph(
-                    navActions = navActions,
-                )
-                serverNavGraph(
-                    navActions = navActions,
-                )
-                mainNavGraph(
-                    appState = appState,
-                )
             }
         }
     }

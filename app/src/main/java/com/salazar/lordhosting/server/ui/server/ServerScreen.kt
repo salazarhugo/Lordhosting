@@ -15,6 +15,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CloudDownload
 import androidx.compose.material.icons.filled.CloudUpload
 import androidx.compose.material.icons.filled.DataUsage
@@ -23,12 +24,16 @@ import androidx.compose.material.icons.filled.NetworkCell
 import androidx.compose.material.icons.filled.Storage
 import androidx.compose.material.icons.filled.Terminal
 import androidx.compose.material.icons.filled.Wifi
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -39,8 +44,13 @@ import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.salazar.lordhosting.R
+import com.salazar.lordhosting.core.ui.components.LordButton
 import com.salazar.lordhosting.core.ui.components.LordCard
 import com.salazar.lordhosting.server.data.internal.bytesFormatter
+import com.salazar.lordhosting.server.domain.models.Server
+import com.salazar.lordhosting.server.ui.console.ConsoleUIAction
+import com.salazar.lordhosting.ui.theme.LordBlue
+import com.salazar.lordhosting.ui.theme.LordRed
 import java.util.Locale
 
 @Composable
@@ -48,20 +58,31 @@ fun ServerScreen(
     uiState: ServerUiState,
     onServerUIAction: (ServerUIAction) -> Unit,
 ) {
+    val server = uiState.server
     Scaffold(
         topBar = {
             TopAppBar(
-                title = {
-                    val image = when (isSystemInDarkTheme()) {
-                        true -> R.drawable.ldh
-                        false -> R.drawable.ldh
+                navigationIcon = {
+                    IconButton(onClick = {
+                        onServerUIAction(ServerUIAction.OnBackPressed)
+                    }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = null)
                     }
-                    AsyncImage(
-                        model = image,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .height(40.dp)
+                },
+                title = {
+                    Text(
+                        text = server?.name ?: "",
                     )
+                },
+                actions = {
+                    IconButton(
+                        modifier = Modifier,
+                        onClick = {
+                            onServerUIAction(ServerUIAction.OnConsoleClick)
+                        },
+                    ) {
+                        Icon(Icons.Default.Terminal, contentDescription = null)
+                    }
                 }
             )
         }
@@ -87,20 +108,52 @@ fun ServerStats(
 ) {
     val stats = uiState.serverStats ?: return
 
-    FilledTonalIconButton(
-        modifier = Modifier,
-        onClick = {
-          onServerUIAction(ServerUIAction.OnConsoleClick)
-        },
-    ) {
-        Icon(Icons.Default.Terminal, contentDescription = null)
-    }
-
     StatusText(
         modifier = Modifier.padding(16.dp),
         status = stats.state,
     )
 
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        LordButton(
+            text = "Start",
+            modifier = Modifier.weight(1f),
+            enabled = stats.state == "offline",
+            onClick = {
+                onServerUIAction(ServerUIAction.UpdatePowerState("start"))
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = LordBlue,
+                contentColor = Color.White,
+            ),
+        )
+        LordButton(
+            text = "Restart",
+            modifier = Modifier.weight(1f),
+            enabled = stats.state == "running",
+            onClick = {
+                  onServerUIAction(ServerUIAction.UpdatePowerState("restart"))
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Gray,
+                contentColor = Color.White,
+            ),
+        )
+        LordButton(
+            text = "Stop",
+            modifier = Modifier.weight(1f),
+            enabled = stats.state == "running",
+            onClick = {
+                onServerUIAction(ServerUIAction.UpdatePowerState("stop"))
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = LordRed,
+                contentColor = Color.White,
+            ),
+        )
+    }
     val server = uiState.server
     StatCard(
         icon = Icons.Default.Wifi,
@@ -191,7 +244,8 @@ fun StatusText(
         Surface(
             color = color,
             shape = MaterialTheme.shapes.small,
-            modifier = Modifier.padding(end = 8.dp)
+            modifier = Modifier
+                .padding(end = 8.dp)
                 .size(8.dp)
         ) {
             // This box will contain the colored dot

@@ -22,6 +22,7 @@ object ServerDestinations {
     const val FILE_ROUTE = "files"
     const val BACKUPS_ROUTE = "backups"
     const val USERS_ROUTE = "users"
+    const val STARTUP_ROUTE = "startup"
     const val SETTINGS_ROUTE = "settings"
 }
 /**

@@ -1,4 +1,4 @@
-package com.salazar.lordhosting.server.ui.server
+package com.salazar.lordhosting.files.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -7,25 +7,25 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.salazar.lordhosting.core.navigation.LordHostingNavigationActions
 
 /**
- * Stateful composable that displays the Navigation route for the Server screen.
+ * Stateful composable that displays the Navigation route for the Files screen.
  *
  * @param viewModel ViewModel that handles the business logic of this screen
  */
 @Composable
-fun ServerRoute(
-    viewModel: ServerViewModel = hiltViewModel(),
+fun FilesRoute(
+    viewModel: FilesViewModel = hiltViewModel(),
     navActions: LordHostingNavigationActions,
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    ServerScreen(
+    FilesScreen(
         uiState = uiState,
-        onServerUIAction = { action ->
+        onFilesUIAction = { action ->
             val serverID = uiState.serverID
             when(action) {
-                ServerUIAction.OnConsoleClick -> navActions.navigateToConsole(serverID)
-                is ServerUIAction.UpdatePowerState -> viewModel.updatePowerState(action.signal)
-                ServerUIAction.OnBackPressed -> navActions.navigateBack()
+                FilesUIAction.OnConsoleClick -> navActions.navigateToConsole(serverID)
+                FilesUIAction.OnBackPressed -> navActions.navigateBack()
+                is FilesUIAction.OnDirectoryClick -> viewModel.onDirectoryClick(action.name)
             }
         },
     )
