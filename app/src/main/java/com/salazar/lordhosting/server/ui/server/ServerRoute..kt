@@ -5,6 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.salazar.lordhosting.core.navigation.LordHostingNavigationActions
+import com.salazar.lordhosting.core.ui.LordHostingAppState
 
 /**
  * Stateful composable that displays the Navigation route for the Server screen.
@@ -13,6 +14,7 @@ import com.salazar.lordhosting.core.navigation.LordHostingNavigationActions
  */
 @Composable
 fun ServerRoute(
+    appState: LordHostingAppState,
     viewModel: ServerViewModel = hiltViewModel(),
     navActions: LordHostingNavigationActions,
 ) {
@@ -25,7 +27,7 @@ fun ServerRoute(
             when(action) {
                 ServerUIAction.OnConsoleClick -> navActions.navigateToConsole(serverID)
                 is ServerUIAction.UpdatePowerState -> viewModel.updatePowerState(action.signal)
-                ServerUIAction.OnBackPressed -> navActions.navigateBack()
+                ServerUIAction.OnBackPressed -> appState.openDrawer()
             }
         },
     )

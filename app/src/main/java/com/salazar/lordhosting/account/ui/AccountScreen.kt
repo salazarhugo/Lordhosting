@@ -1,21 +1,24 @@
 package com.salazar.lordhosting.account.ui
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import com.salazar.lordhosting.R
 import com.salazar.lordhosting.core.ui.components.LoadingScreen
 import com.salazar.lordhosting.core.ui.components.LordCard
 
@@ -24,7 +27,15 @@ fun AccountScreen(
     uiState: AccountUiState,
     onAccountUIAction: (AccountUIAction) -> Unit,
 ) {
-    Scaffold() {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = stringResource(id = R.string.account))
+                }
+            )
+        },
+    ) {
         val account = uiState.account
         if (account == null)
             LoadingScreen()

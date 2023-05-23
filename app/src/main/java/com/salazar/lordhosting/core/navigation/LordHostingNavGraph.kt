@@ -23,6 +23,7 @@ fun LordHostingNavGraph(
     uiState: LordHostingUiState,
     appState: LordHostingAppState,
 ) {
+//    val state = rememberDrawerState(DrawerValue.Closed)
     val startDestination = LordHostingDestinations.AUTH_ROUTE
 
     val navBackStackEntry by appState.navController.currentBackStackEntryAsState()
@@ -45,14 +46,13 @@ fun LordHostingNavGraph(
             .fillMaxSize()
             .imePadding()
     ) {
-        val state = rememberDrawerState(DrawerValue.Closed)
         ModalNavigationDrawer(
-            drawerState = state,
+            drawerState = appState.drawerState,
             drawerContent = {
                 LordHostingDrawer(
                     navBackStackEntry = navBackStackEntry,
                     navController = appState.navController,
-                    drawerState = state,
+                    drawerState = appState.drawerState,
                 )
             },
         ) {
@@ -82,6 +82,7 @@ fun LordHostingNavGraph(
                         navActions = navActions,
                     )
                     serverNavGraph(
+                        appState = appState,
                         navActions = navActions,
                     )
                     mainNavGraph(

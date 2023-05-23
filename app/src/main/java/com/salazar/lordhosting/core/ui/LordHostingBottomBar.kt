@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Payment
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material.icons.rounded.Computer
@@ -44,10 +45,10 @@ fun LordHostingBottomBar(
             label = stringResource(id = R.string.servers),
         ),
         Screen(
-            route = MainDestinations.BILLING_ROUTE,
-            icon = { Icon(Icons.Outlined.Payment, null, tint = MaterialTheme.colorScheme.onBackground) },
-            selectedIcon = { Icon(Icons.Filled.Payment, null, tint = MaterialTheme.colorScheme.onBackground) },
-            label = stringResource(id = R.string.billing),
+            route = MainDestinations.HOME_ROUTE,
+            icon = { Icon(Icons.Outlined.Home, null, tint = MaterialTheme.colorScheme.onBackground) },
+            selectedIcon = { Icon(Icons.Filled.Home, null, tint = MaterialTheme.colorScheme.onBackground) },
+            label = stringResource(id = R.string.home),
         ),
         Screen(
             route = MainDestinations.ACCOUNT_ROUTE,

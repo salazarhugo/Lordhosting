@@ -3,12 +3,20 @@
 
     <string name="servers">Servers</string>
     <string name="billing">Billing</string>
+    <string name="home">Home</string>
     <string name="console">Console</string>
     <string name="files">Files</string>
     <string name="account">Account</string>
     <string name="users">Users</string>
     <string name="backups">Backups</string>
     <string name="startup">Startup</string>
+    <string name="create_user">Create new subuser</string>
+    <string name="user_email">User email</string>
+    <string name="create">Create</string>
 
     <string name="login">Login</string>
+    <string name="discord_link">https://discord.com/invite/DacWBwX</string>
+    <string name="espace_client_link">https://lordhosting.fr/</string>
+    <string name="support_link">https://lordhosting.fr/contacts.php</string>
+
 </resources>

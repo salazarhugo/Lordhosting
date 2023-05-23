@@ -5,6 +5,7 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.navigation
 import com.salazar.lordhosting.account.ui.AccountRoute
 import com.salazar.lordhosting.core.ui.LordHostingAppState
+import com.salazar.lordhosting.home.HomeRoute
 import com.salazar.lordhosting.server.ui.servers.ServersRoute
 
 
@@ -19,6 +20,14 @@ fun NavGraphBuilder.mainNavGraph(
             route = MainDestinations.SERVERS_ROUTE,
         ) {
             ServersRoute(
+                navActions = appState.navActions,
+            )
+        }
+
+        composable(
+            route = MainDestinations.HOME_ROUTE,
+        ) {
+            HomeRoute(
                 navActions = appState.navActions,
             )
         }

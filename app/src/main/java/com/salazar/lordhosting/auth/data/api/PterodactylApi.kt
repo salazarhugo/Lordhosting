@@ -5,11 +5,20 @@ import com.salazar.lordhosting.account.data.request.UpdatePasswordRequest
 import com.salazar.lordhosting.account.data.response.AccountDetailsResponse
 import com.salazar.lordhosting.auth.data.request.LoginRequest
 import com.salazar.lordhosting.auth.data.response.LoginResponse
+import com.salazar.lordhosting.core.data.response.GetPermissionsResponse
+import com.salazar.lordhosting.files.data.request.CreateFolderRequest
+import com.salazar.lordhosting.files.data.request.DeleteFileRequest
 import com.salazar.lordhosting.files.data.response.ListFilesResponse
 import com.salazar.lordhosting.server.data.request.SendCommandRequest
 import com.salazar.lordhosting.server.data.request.UpdatePowerStateRequest
+import com.salazar.lordhosting.server.data.response.BackupResponse
 import com.salazar.lordhosting.server.data.response.ConsoleWebSocketResponse
+import com.salazar.lordhosting.server.data.response.ListBackupsResponse
 import com.salazar.lordhosting.server.data.response.ListServersResponse
+import com.salazar.lordhosting.server.data.response.ListVariablesResponse
+import com.salazar.lordhosting.users.data.request.CreateUserRequest
+import com.salazar.lordhosting.users.data.response.ListUsersResponse
+import com.salazar.lordhosting.users.data.response.UserResponse
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -72,8 +81,67 @@ interface PterodactylApi {
         @Query("directory") directory: String? = null,
     ): ListFilesResponse
 
+    @POST("api/client/servers/{serverID}/files/create-folder")
+    suspend fun createFolder(
+        @Path("serverID") serverID: String,
+        @Body request: CreateFolderRequest,
+    ): Response<Void>
+
+    @POST("api/client/servers/{serverID}/files/delete")
+    suspend fun deleteFile(
+        @Path("serverID") serverID: String,
+        @Body request: DeleteFileRequest,
+    ): Response<Void>
+
+    @GET("api/client/servers/{serverID}/files/contents")
+    suspend fun getFileContent(
+        @Path("serverID") serverID: String,
+        @Query("file") file: String,
+    ): Response<Void>
+
+    @GET("api/client/permissions")
+    suspend fun getPermissions(): GetPermissionsResponse
+
+    @GET("api/client/servers/{serverID}/users")
+    suspend fun listUsers(
+        @Path("serverID") serverID: String,
+    ): ListUsersResponse
+
+    @POST("api/client/servers/{serverID}/users")
+    suspend fun createUser(
+        @Path("serverID") serverID: String,
+        @Body request: CreateUserRequest,
+    ): UserResponse
+
+    @GET("api/client/servers/{serverID}/startup")
+    suspend fun listVariables(
+        @Path("serverID") serverID: String,
+    ): ListVariablesResponse
+
+    @GET("api/client/servers/{serverID}/backups")
+    suspend fun listBackups(
+        @Path("serverID") serverID: String,
+    ): ListBackupsResponse
+
+    @POST("api/client/servers/{serverID}/backups")
+    suspend fun createBackup(
+        @Path("serverID") serverID: String,
+    ): BackupResponse
+
+    @DELETE("api/client/servers/{serverID}/backups/{backupID}")
+    suspend fun deleteBackup(
+        @Path("serverID") serverID: String,
+        @Path("backupID") backupID: String,
+    ): Response<Void>
+
+    @DELETE("api/client/servers/{serverID}/users/{userID}")
+    suspend fun deleteUser(
+        @Path("serverID") serverID: String,
+        @Path("userID") userID: String,
+    ): Response<Void>
+
     companion object {
-//         const val BASE_URL = "https://game.lordhosting.fr/"
+        //         const val BASE_URL = "https://game.lordhosting.fr/"
         const val BASE_URL = "http://154.51.39.199/"
-     }
+    }
 }

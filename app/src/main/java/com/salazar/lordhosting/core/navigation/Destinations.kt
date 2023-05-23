@@ -22,6 +22,7 @@ object ServerDestinations {
     const val FILE_ROUTE = "files"
     const val BACKUPS_ROUTE = "backups"
     const val USERS_ROUTE = "users"
+    const val CREATE_USER_ROUTE = "createUser"
     const val STARTUP_ROUTE = "startup"
     const val SETTINGS_ROUTE = "settings"
 }
@@ -31,7 +32,7 @@ object ServerDestinations {
 object MainDestinations {
     const val SERVERS_ROUTE = "servers"
     const val ACCOUNT_ROUTE = "account"
-    const val BILLING_ROUTE = "billing"
+    const val HOME_ROUTE = "home"
 }
 
 /**
@@ -61,6 +62,12 @@ class LordHostingNavigationActions(
 ) {
     val navigateBack: () -> Unit = {
         navController.popBackStack()
+    }
+
+    val navigateToCreateUser: (String) -> Unit = { serverId ->
+        navController.navigate("${ServerDestinations.CREATE_USER_ROUTE}/$serverId") {
+            launchSingleTop = true
+        }
     }
 
     val navigateToServer: (String) -> Unit = { serverId ->

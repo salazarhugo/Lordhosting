@@ -21,7 +21,7 @@ fun AccountRoute(
     AccountScreen(
         uiState = uiState,
         onAccountUIAction = { action ->
-            when(action) {
+            when (action) {
                 is AccountUIAction.OnCurrentPasswordChange -> viewModel.updateCurrentPassword(action.currentPassword)
                 is AccountUIAction.OnEmailChange -> viewModel.updateNewPassword(action.email)
                 is AccountUIAction.OnNewPasswordChange -> viewModel.updateNewPassword(action.newPassword)
@@ -30,6 +30,7 @@ fun AccountRoute(
                         navActions.navigateToSignIn()
                     }
                 }
+
                 AccountUIAction.OnUpdateEmailClick -> viewModel.onUpdateEmailClick()
                 AccountUIAction.OnUpdatePasswordClick -> viewModel.onUpdatePasswordClick()
             }

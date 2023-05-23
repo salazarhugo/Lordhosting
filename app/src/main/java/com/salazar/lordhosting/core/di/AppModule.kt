@@ -17,6 +17,9 @@ import com.salazar.lordhosting.files.data.repository.FilesRepositoryImpl
 import com.salazar.lordhosting.server.data.db.ServerDao
 import com.salazar.lordhosting.server.data.repository.ServerRepository
 import com.salazar.lordhosting.server.data.repository.ServerRepositoryImpl
+import com.salazar.lordhosting.users.data.db.UserDao
+import com.salazar.lordhosting.users.data.repository.UserRepository
+import com.salazar.lordhosting.users.data.repository.UserRepositoryImpl
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -75,6 +78,13 @@ object AppModule {
     }
 
     @Provides
+    fun provideUsersRepository(
+        impl: UserRepositoryImpl,
+    ): UserRepository {
+        return impl
+    }
+
+    @Provides
     fun provideFilesRepository(
         impl: FilesRepositoryImpl,
     ): FilesRepository {
@@ -101,6 +111,14 @@ object AppModule {
             .databaseBuilder(context.applicationContext, Database::class.java, "lordhosting.db")
             .fallbackToDestructiveMigration()
             .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserDao(
+        database: Database,
+    ): UserDao {
+        return database.userDao()
     }
 
     @Singleton

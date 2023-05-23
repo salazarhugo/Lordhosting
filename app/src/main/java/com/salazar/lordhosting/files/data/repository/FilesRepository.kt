@@ -7,4 +7,16 @@ interface FilesRepository {
         serverID: String,
         directory: String? = null,
     ): Result<List<File>>
+
+    suspend fun createFolder(
+        serverID: String,
+        root: String,
+        folderName: String,
+    ): Result<Unit>
+
+    suspend fun deleteFiles(
+        serverID: String,
+        root: String,
+        files: List<String>,
+    ): Result<Unit>
 }
