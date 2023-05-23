@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Lordhosting"
-include ':app'
+include(":app")

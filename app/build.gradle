@@ -1,22 +1,22 @@
 plugins {
-    id 'com.android.application'
-    id 'kotlin-kapt'
-    id 'com.google.devtools.ksp'
-    id 'dagger.hilt.android.plugin'
+    id "com.android.application"
+    id "kotlin-kapt"
+    id "com.google.devtools.ksp"
+    id "dagger.hilt.android.plugin"
     id "com.google.protobuf"
-    id 'org.jetbrains.kotlin.android'
+    id "org.jetbrains.kotlin.android"
 }
 
 android {
-    namespace 'com.salazar.lordhosting'
+    namespace "com.salazar.lordhosting"
     compileSdk 33
 
     defaultConfig {
         applicationId "com.salazar.lordhosting"
         minSdk 28
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -27,7 +27,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
     compileOptions {
@@ -35,7 +35,7 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '17'
+        jvmTarget = "17"
     }
     buildFeatures {
         compose true
@@ -45,7 +45,7 @@ android {
     }
     packagingOptions {
         resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
     allprojects {
@@ -81,18 +81,18 @@ protobuf {
     generateProtoTasks {
         all().forEach { task ->
             task.builtins {
-                java { option 'lite' }
+                java { option "lite" }
             }
         }
     }
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.10.1'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
+    implementation "androidx.core:core-ktx:1.10.1"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
 
     // Jetpack Compose BOM
-    implementation platform('androidx.compose:compose-bom:2023.05.01')
+    implementation platform("androidx.compose:compose-bom:2023.05.01")
     implementation "androidx.compose.ui:ui"
     implementation "androidx.compose.ui:ui-util"
     implementation "androidx.compose.material:material"
@@ -101,7 +101,9 @@ dependencies {
     implementation "androidx.compose.ui:ui-viewbinding"
     implementation "androidx.compose.runtime:runtime-livedata"
     implementation "androidx.compose.material3:material3"
-    implementation 'androidx.activity:activity-compose:1.7.1'
+    implementation "androidx.activity:activity-compose:1.7.1"
+
+    implementation "com.squareup.retrofit2:converter-scalars:2.9.0"
 
     // DataStore
     implementation "androidx.datastore:datastore-preferences:1.0.0"
@@ -120,7 +122,7 @@ dependencies {
     // Dagger Hilt
     implementation "com.google.dagger:hilt-android:2.44"
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
     kapt("androidx.hilt:hilt-compiler:1.0.0")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
 
@@ -128,8 +130,8 @@ dependencies {
     implementation "io.coil-kt:coil-compose:2.3.0"
 
     // Lifecycle
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
-    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.6.1'
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-runtime-compose:2.6.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
 
     // Accompanist
@@ -153,9 +155,9 @@ dependencies {
     implementation("com.squareup.moshi:moshi:1.14.0")
     ksp "com.squareup.moshi:moshi-kotlin-codegen:1.14.0"
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    testImplementation "junit:junit:4.13.2"
+    androidTestImplementation "androidx.test.ext:junit:1.1.5"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
     debugImplementation "androidx.compose.ui:ui-tooling:1.4.3"
     debugImplementation "androidx.compose.ui:ui-test-manifest:1.4.3"
 }

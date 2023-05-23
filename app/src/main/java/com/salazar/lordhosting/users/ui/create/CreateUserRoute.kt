@@ -19,7 +19,7 @@ fun CreateUserRoute(
         uiState = uiState,
         onCreateUserUIAction = { action ->
             when (action) {
-                CreateUserUIAction.OnBackPressed -> appState.openDrawer()
+                CreateUserUIAction.OnBackPressed -> navActions.navigateBack()
                 is CreateUserUIAction.OnDeleteUser -> {}
                 CreateUserUIAction.OnNewUserClick -> {
                 }

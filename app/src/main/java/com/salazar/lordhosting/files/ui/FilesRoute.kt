@@ -44,7 +44,7 @@ fun FilesRoute(
                 }
                 is FilesUIAction.OnDirectoryClick -> viewModel.onDirectoryClick(action.name)
                 is FilesUIAction.OnCreateFolder -> viewModel.onCreateFolder(action.name)
-                is FilesUIAction.OnFileClick -> viewModel.onFileClick(action.file)
+                is FilesUIAction.OnFileMoreClick -> viewModel.onFileClick(action.file)
                 is FilesUIAction.OnOpenBottomSheetChange -> viewModel.updateOpenSheet(action.openBottomSheet)
                 is FilesUIAction.OnDeleteFile -> viewModel.deleteFile()
                 FilesUIAction.OnDeleteActionClick -> {
@@ -53,6 +53,10 @@ fun FilesRoute(
                 }
 
                 is FilesUIAction.OnOpenDeleteDialogChange -> viewModel.updateOpenDeleteDialog(action.open)
+                is FilesUIAction.OnFileClick -> {
+                    val currentRoute = uiState.currentRoute.joinToString(separator = "/")
+                    navActions.navigateToEditFile(serverID, "$currentRoute/${action.file.name}")
+                }
             }
         },
     )

@@ -97,6 +97,13 @@ interface PterodactylApi {
     suspend fun getFileContent(
         @Path("serverID") serverID: String,
         @Query("file") file: String,
+    ): Response<String>
+
+    @POST("api/client/servers/{serverID}/files/write")
+    suspend fun writeFile(
+        @Path("serverID") serverID: String,
+        @Query("file") file: String,
+        @Body content: String,
     ): Response<Void>
 
     @GET("api/client/permissions")

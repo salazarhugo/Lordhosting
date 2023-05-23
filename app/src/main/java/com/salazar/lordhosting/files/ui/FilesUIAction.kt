@@ -7,10 +7,10 @@ sealed class FilesUIAction {
     object OnConsoleClick : FilesUIAction()
     data class OnDirectoryClick(val name: String) : FilesUIAction()
     data class OnCreateFolder(val name: String) : FilesUIAction()
+    data class OnFileMoreClick(val file: File) : FilesUIAction()
     data class OnFileClick(val file: File) : FilesUIAction()
     object OnDeleteFile : FilesUIAction()
     object OnDeleteActionClick : FilesUIAction()
-
     data class OnOpenDeleteDialogChange(val open: Boolean): FilesUIAction()
     data class OnOpenBottomSheetChange(val openBottomSheet: Boolean): FilesUIAction()
 }

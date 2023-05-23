@@ -50,6 +50,41 @@ class FilesRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun writeFile(
+        serverID: String,
+        file: String,
+        content: String,
+    ): Result<Unit> {
+        return try {
+            api.writeFile(
+                serverID = serverID,
+                file = file,
+                content = content,
+            )
+            Result.success(Unit)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun getFileContent(
+        serverID: String,
+        file: String,
+    ): Result<String> {
+        return try {
+            val result = api.getFileContent(
+                serverID = serverID,
+                file = file,
+            )
+            val content = result.body() ?: ""
+            Result.success(content)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(e)
+        }
+    }
+
     override suspend fun deleteFiles(
         serverID: String,
         root: String,

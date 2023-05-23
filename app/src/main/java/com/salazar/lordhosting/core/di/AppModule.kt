@@ -29,6 +29,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import javax.inject.Singleton
 
 
@@ -55,6 +56,7 @@ object AppModule {
 
         val retrofit = retrofit2.Retrofit.Builder()
             .baseUrl(PterodactylApi.BASE_URL)
+            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(okHttpClient)
             .build()

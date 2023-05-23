@@ -13,6 +13,7 @@
     <string name="create_user">Create new subuser</string>
     <string name="user_email">User email</string>
     <string name="create">Create</string>
+    <string name="save_changes">Save changes</string>
 
     <string name="login">Login</string>
     <string name="discord_link">https://discord.com/invite/DacWBwX</string>

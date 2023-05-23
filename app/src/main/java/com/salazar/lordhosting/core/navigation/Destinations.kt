@@ -1,6 +1,8 @@
 package com.salazar.lordhosting.core.navigation
 
 import androidx.navigation.NavHostController
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 /**
  * Destinations used in the [LordHostingApp].
@@ -20,6 +22,7 @@ object ServerDestinations {
     const val SERVER_ROUTE = "server"
     const val CONSOLE_ROUTE = "console"
     const val FILE_ROUTE = "files"
+    const val EDIT_FILE_ROUTE = "editFile"
     const val BACKUPS_ROUTE = "backups"
     const val USERS_ROUTE = "users"
     const val CREATE_USER_ROUTE = "createUser"
@@ -62,6 +65,13 @@ class LordHostingNavigationActions(
 ) {
     val navigateBack: () -> Unit = {
         navController.popBackStack()
+    }
+
+    val navigateToEditFile: (String, String) -> Unit = { serverId, file ->
+        val encodedFile = URLEncoder.encode(file, StandardCharsets.UTF_8.toString())
+        navController.navigate("${ServerDestinations.EDIT_FILE_ROUTE}/$serverId/$encodedFile") {
+            launchSingleTop = true
+        }
     }
 
     val navigateToCreateUser: (String) -> Unit = { serverId ->

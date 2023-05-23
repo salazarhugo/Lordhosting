@@ -6,6 +6,7 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.navigation
 import com.salazar.lordhosting.core.ui.LordHostingAppState
 import com.salazar.lordhosting.files.ui.FilesRoute
+import com.salazar.lordhosting.files.ui.edit.EditFileRoute
 import com.salazar.lordhosting.server.ui.backups.BackupsRoute
 import com.salazar.lordhosting.server.ui.console.ConsoleRoute
 import com.salazar.lordhosting.server.ui.server.ServerRoute
@@ -42,6 +43,15 @@ fun NavGraphBuilder.serverNavGraph(
             route = "${ServerDestinations.FILE_ROUTE}/{serverID}",
         ) {
             FilesRoute(
+                appState = appState,
+                navActions = navActions,
+            )
+        }
+
+        composable(
+            route = "${ServerDestinations.EDIT_FILE_ROUTE}/{serverID}/{file}",
+        ) {
+            EditFileRoute(
                 appState = appState,
                 navActions = navActions,
             )

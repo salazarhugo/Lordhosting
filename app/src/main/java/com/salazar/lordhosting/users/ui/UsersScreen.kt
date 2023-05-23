@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Lock
@@ -36,10 +34,8 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.salazar.lordhosting.R
 import com.salazar.lordhosting.core.ui.components.ButtonWithLoading
+import com.salazar.lordhosting.core.ui.components.LordButton
 import com.salazar.lordhosting.core.ui.components.LordCard
-import com.salazar.lordhosting.files.ui.FilesUIAction
-import com.salazar.lordhosting.files.ui.dialogs.DeleteFileDialog
-import com.salazar.lordhosting.server.ui.backups.BackupsUIAction
 import com.salazar.lordhosting.ui.theme.LordGreen
 import com.salazar.lordhosting.users.domain.models.User
 
@@ -71,9 +67,10 @@ fun UsersScreen(
                 .padding(top = it.calculateTopPadding())
                 .padding(16.dp),
         ) {
-            ButtonWithLoading(
+            LordButton(
                 text = "New User",
-                isLoading = uiState.isLoading,
+                modifier = Modifier.padding(vertical = 16.dp),
+                enabled = !uiState.isLoading,
                 onClick = {
                     onUsersUIAction(UsersUIAction.OnNewUserClick)
                 },

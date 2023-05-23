@@ -1,5 +1,6 @@
 package com.salazar.lordhosting.users.ui.create
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,6 +28,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.salazar.lordhosting.R
 import com.salazar.lordhosting.core.data.response.PermissionResponse
+import com.salazar.lordhosting.core.ui.components.LordTextField
 
 @Composable
 fun CreateUserScreen(
@@ -49,10 +51,12 @@ fun CreateUserScreen(
                     Text(text = stringResource(id = R.string.create_user))
                 },
                 actions = {
+                    val enabled = uiState.email.isNotBlank() && uiState.selectedPermissions.isNotEmpty()
                     Button(
                         onClick = {
                             onCreateUserUIAction(CreateUserUIAction.OnCreateClick)
                         },
+                        enabled = enabled,
                     ) {
                         Text(
                             text = stringResource(id = R.string.create),
@@ -66,7 +70,7 @@ fun CreateUserScreen(
             modifier = Modifier
                 .padding(top = it.calculateTopPadding()),
         ) {
-            TextField(
+            LordTextField(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
@@ -118,6 +122,10 @@ fun Permission(
     permission.keys.forEach { (name, description) ->
         val selected = selectedPermissions.contains("$group.$name")
         ListItem(
+            modifier = Modifier
+                .clickable {
+                    onCreateUserUIAction(CreateUserUIAction.OnTogglePermission("$group.$name"))
+                },
             headlineContent = {
                 Text(
                     text = name.uppercase(),

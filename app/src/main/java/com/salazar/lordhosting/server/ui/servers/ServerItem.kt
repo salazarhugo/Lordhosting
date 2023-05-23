@@ -40,9 +40,7 @@ fun ServerItem(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                FilledTonalIconButton(onClick = {}) {
-                    Icon(Icons.Default.Dns, contentDescription = null)
-                }
+                Icon(Icons.Default.Dns, contentDescription = null)
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
                     text = server.name,

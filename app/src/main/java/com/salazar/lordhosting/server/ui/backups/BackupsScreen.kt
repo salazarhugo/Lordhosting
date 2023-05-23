@@ -27,6 +27,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,8 +39,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.salazar.lordhosting.R
 import com.salazar.lordhosting.core.ui.components.ButtonWithLoading
+import com.salazar.lordhosting.core.ui.components.LordButton
 import com.salazar.lordhosting.core.ui.components.LordCard
 import com.salazar.lordhosting.server.domain.models.Backup
+import com.salazar.lordhosting.users.ui.DeleteUserDialog
+import com.salazar.lordhosting.users.ui.UsersUIAction
 
 @Composable
 fun BackupsScreen(
@@ -69,9 +76,9 @@ fun BackupsScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(32.dp),
         ) {
-            ButtonWithLoading(
+            LordButton(
                 text = "Create Backup",
-                isLoading = uiState.isLoading,
+                enabled = !uiState.isLoading,
                 onClick = {
                     onBackupsUIAction(BackupsUIAction.OnCreateBackup)
                 },
@@ -91,7 +98,7 @@ fun BackupsScreen(
         ModalBottomSheet(
             onDismissRequest = {
                 onBackupsUIAction(BackupsUIAction.OnOpenBottomSheetChange(false))
-           },
+            },
             sheetState = uiState.bottomSheetState,
         ) {
             BackupActionButtons(
@@ -104,10 +111,12 @@ fun BackupsScreen(
 fun BackupActionButtons(
     onBackupsUIAction: (BackupsUIAction) -> Unit,
 ) {
+    var openDialog by remember { mutableStateOf(false) }
+
     Column {
         ListItem(
             modifier = Modifier
-                .clickable { onBackupsUIAction(BackupsUIAction.OnDelete) },
+                .clickable { openDialog = true },
             headlineContent = { Text("Delete") },
             leadingContent = {
                 Icon(
@@ -117,6 +126,16 @@ fun BackupActionButtons(
             }
         )
     }
+
+    DeleteBackupDialog(
+        openDialog = openDialog,
+        onDelete = {
+            onBackupsUIAction(BackupsUIAction.OnDelete)
+        },
+        onClose = {
+            openDialog = false
+        },
+    )
 }
 
 @Composable
@@ -158,8 +177,7 @@ fun BackupsCommand(
                 .clip(RoundedCornerShape(12.dp))
                 .background(Color.Black)
                 .border(2.dp, Color.DarkGray, RoundedCornerShape(12.dp))
-                .padding(12.dp)
-            ,
+                .padding(12.dp),
         ) {
             Text(
                 text = startupCommand,

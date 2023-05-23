@@ -14,6 +14,17 @@ interface FilesRepository {
         folderName: String,
     ): Result<Unit>
 
+    suspend fun writeFile(
+        serverID: String,
+        file: String,
+        content: String,
+    ): Result<Unit>
+
+    suspend fun getFileContent(
+        serverID: String,
+        file: String,
+    ): Result<String>
+
     suspend fun deleteFiles(
         serverID: String,
         root: String,
