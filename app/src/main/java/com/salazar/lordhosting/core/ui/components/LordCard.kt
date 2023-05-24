@@ -18,7 +18,7 @@ fun LordCard(
     Card(
         onClick = onClick,
         modifier = modifier,
-        shape = MaterialTheme.shapes.large,
+        shape = MaterialTheme.shapes.extraLarge,
         content = {
             Column(
                 modifier = Modifier.padding(16.dp),

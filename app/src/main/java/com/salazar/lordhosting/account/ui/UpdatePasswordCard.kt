@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.salazar.lordhosting.core.ui.components.LordButton
 import com.salazar.lordhosting.core.ui.components.LordCard
 import com.salazar.lordhosting.core.ui.components.LordCardTitle
+import com.salazar.lordhosting.core.ui.components.LordTextField
 
 @Composable
 fun UpdatePasswordCard(
@@ -53,7 +54,8 @@ fun UpdatePasswordCard(
             text = "Update Password",
             onClick = {
                 onAccountUIAction(AccountUIAction.OnUpdatePasswordClick)
-            }
+            },
+            enabled = newPassword.isNotBlank() && currentPassword.isNotBlank(),
         )
     }
 }

@@ -16,6 +16,7 @@ fun LordTextField(
     modifier: Modifier = Modifier,
     placeholder: @Composable (() -> Unit)? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    enabled: Boolean = true,
 ) {
     TextField(
         modifier = modifier,
@@ -29,5 +30,6 @@ fun LordTextField(
         placeholder = placeholder,
         onValueChange = onValueChange,
         keyboardOptions = keyboardOptions,
+        enabled = enabled,
     )
 }

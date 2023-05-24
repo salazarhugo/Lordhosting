@@ -8,6 +8,8 @@ import com.salazar.lordhosting.auth.data.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -29,6 +31,7 @@ class AccountViewModel @Inject constructor(
 ) : ViewModel() {
     private val viewModelState = MutableStateFlow(AccountUiState(isLoading = true))
 
+//    val accountUiState = combine(viewModelState, )
     val uiState = viewModelState
         .stateIn(
             viewModelScope,

@@ -53,7 +53,8 @@ fun UpdateEmailCard(
             text = "Update Email",
             onClick = {
                 onAccountUIAction(AccountUIAction.OnUpdateEmailClick)
-            }
+            },
+            enabled = email.isNotBlank() && currentPassword.isNotBlank(),
         )
     }
 }
